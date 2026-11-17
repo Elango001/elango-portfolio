@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Mail, MapPin, Copy, Check, Download, ExternalLink, Send } from "lucide-react";
 import confetti from "canvas-confetti";
 import { resumeData } from "@/data/resume";
@@ -8,6 +8,11 @@ import { GithubIcon } from "./icons/GithubIcon";
 
 export function ContactFooter() {
   const [copied, setCopied] = useState(false);
+  const [year, setYear] = useState<number>(2026);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(resumeData.email);
@@ -156,7 +161,7 @@ export function ContactFooter() {
           </div>
 
           <div className="text-neutral-500 dark:text-neutral-500 text-[11px]">
-            © {new Date().getFullYear()} Elangovan S. All rights reserved.
+            © {year} Elangovan S. All rights reserved.
           </div>
         </div>
       </div>
