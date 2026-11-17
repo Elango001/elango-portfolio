@@ -1,26 +1,272 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* nk.studio Light Mode: Warm Tint (#F6F1EA) with Carbon (#0A0A0A) & Forest Mint (#00634B) */
+  --bg-page: #F6F1EA;
+  --bg-surface: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-inner: #EFE9DE;
+  --bg-nav: rgba(246, 241, 234, 0.90);
+  --border-card: rgba(10, 10, 10, 0.08);
+  --border-subtle: rgba(10, 10, 10, 0.05);
+  --border-focus: #0A0A0A;
+  --text-main: #141414;
+  --text-heading: #0A0A0A;
+  --text-sub: #404040;
+  --text-dim: #737373;
+  --accent: #00634B;
+  --accent-contrast: #FFFFFF;
+  --accent-soft: rgba(0, 99, 75, 0.08);
+  --accent-border: rgba(0, 99, 75, 0.22);
+  --code-bg: #EAE3D5;
+  --code-border: rgba(10, 10, 10, 0.08);
+}
+
+.dark {
+  /* nk.studio Dark Mode: Carbon Onyx (#0A0A0A) with Electric Mint (#00FFC2) & Crisp White */
+  --bg-page: #0A0A0A;
+  --bg-surface: #141414;
+  --bg-card: rgba(20, 20, 20, 0.88);
+  --bg-card-inner: #181818;
+  --bg-nav: rgba(10, 10, 10, 0.85);
+  --border-card: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-focus: #00FFC2;
+  --text-main: #EDEDED;
+  --text-heading: #FFFFFF;
+  --text-sub: #A1A1A1;
+  --text-dim: #737373;
+  --accent: #00FFC2;
+  --accent-contrast: #0A0A0A;
+  --accent-soft: rgba(0, 255, 194, 0.12);
+  --accent-border: rgba(0, 255, 194, 0.35);
+  --code-bg: #141414;
+  --code-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), monospace;
+  --font-display: var(--font-dm-sans), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-page);
+  color: var(--text-main);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  position: relative;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* View Transitions Circular Reveal Animation */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Background Subtle Studio Grid */
+.bg-dev-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(10, 10, 10, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.04) 1px, transparent 1px);
+}
+
+.dark .bg-dev-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 194, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 194, 0.035) 1px, transparent 1px);
+}
+
+/* Marquee Animations (sweet-tape.com / nk.studio inspired) */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 200%;
+  animation: shimmer 5s ease-in-out infinite;
+}
+
+/* Character Animation Choreography */
+@keyframes dance-body {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-7px) rotate(-5deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(-7px) rotate(5deg); }
+}
+
+@keyframes dance-arm-l {
+  0%, 100% { transform: rotate(-25deg); }
+  50% { transform: rotate(50deg); }
+}
+
+@keyframes dance-arm-r {
+  0%, 100% { transform: rotate(50deg); }
+  50% { transform: rotate(-25deg); }
+}
+
+@keyframes sprint-body {
+  0%, 100% { transform: translateY(0px) rotate(18deg); }
+  50% { transform: translateY(-8px) rotate(22deg); }
+}
+
+@keyframes sprint-leg-l {
+  0%, 100% { transform: rotate(-45deg); }
+  50% { transform: rotate(45deg); }
+}
+
+@keyframes sprint-leg-r {
+  0%, 100% { transform: rotate(45deg); }
+  50% { transform: rotate(-45deg); }
+}
+
+@keyframes superman-flight {
+  0%, 100% { transform: translate(0px, 0px) rotate(-12deg); }
+  50% { transform: translate(12px, -14px) rotate(-9deg); }
+}
+
+@keyframes cape-flutter {
+  0%, 100% { transform: scaleX(1) skewY(0deg); }
+  50% { transform: scaleX(1.2) skewY(8deg); }
+}
+
+@keyframes wipe-forehead {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: translate(2px, -12px) rotate(60deg); }
+  45% { transform: translate(6px, -15px) rotate(78deg); }
+  65% { transform: translate(2px, -12px) rotate(60deg); }
+  85% { transform: translate(0px, -4px) rotate(20deg); }
+}
+
+@keyframes float-sweat {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+  35% { opacity: 1; transform: translate(14px, -10px) scale(1.1); }
+  100% { opacity: 0; transform: translate(26px, 6px) scale(0.3); }
+}
+
+@keyframes pop-bubble {
+  0% { opacity: 0; transform: scale(0.4) translateY(10px); }
+  15% { opacity: 1; transform: scale(1.08) translateY(-3px); }
+  25% { transform: scale(1) translateY(0); }
+  85% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8) translateY(-8px); }
+}
+
+@keyframes typing-hands {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3.5px); }
+}
+
+@keyframes screen-flicker {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+
+/* Studio Window / Card */
+.macos-window {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.macos-window:hover {
+  border-color: var(--border-focus);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
+}
+
+.dark .macos-window {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .macos-window:hover {
+  border-color: rgba(0, 255, 194, 0.45);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 255, 194, 0.08);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(10, 10, 10, 0.2);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0A0A0A;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #00FFC2;
+}
+
+/* Text Selection */
+::selection {
+  background: #0A0A0A;
+  color: #F6F1EA;
+}
+
+.dark ::selection {
+  background: #00FFC2;
+  color: #0A0A0A;
 }
